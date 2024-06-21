@@ -2,26 +2,30 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+
 const app = express();
 const server = http.createServer(app);
 
+// Menggunakan middleware cors
 app.use(
   cors({
-    origin: "*",
+    origin: "*", // Mengizinkan semua origin
+    methods: ["GET", "POST"],
     credentials: true,
   })
 );
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "*", // Mengizinkan semua origin
+    methods: ["GET", "POST"],
     credentials: true,
   },
 });
 
-// app.get("/", (req, res) => {
-//   res.send("Hello, world!");
-// });
+app.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
 
 // Handle WebSocket connections here
 io.on("connection", (socket) => {
