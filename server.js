@@ -11,6 +11,10 @@ const io = new Server(server, {
   },
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
+
 // Handle WebSocket connections here
 io.on("connection", (socket) => {
   console.log("A new user has connected", socket.id);
