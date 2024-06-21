@@ -6,15 +6,7 @@ const cors = require("cors");
 const app = express();
 const server = http.createServer(app);
 
-const io = new Server(server, {
-  cors: {
-    origin: "*", // Mengizinkan semua origin
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
-});
-
-// Middleware CORS untuk Express
+// Menggunakan middleware cors
 app.use(
   cors({
     origin: "*", // Mengizinkan semua origin
@@ -23,11 +15,19 @@ app.use(
   })
 );
 
+const io = new Server(server, {
+  cors: {
+    origin: "*", // Mengizinkan semua origin
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
-// Handle WebSocket connections
+// Handle WebSocket connections here
 io.on("connection", (socket) => {
   console.log("A new user has connected", socket.id);
 
