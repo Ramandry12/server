@@ -1,3 +1,5 @@
+// server/index.js
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -27,22 +29,19 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
-// Handle WebSocket connections here
 io.on("connection", (socket) => {
-  console.log("A new user has connected", socket.id);
+  console.log("udah konek", socket.id);
 
-  // Listen for incoming messages from clients
   socket.on("message", (message) => {
-    // Broadcast the message to all connected clients
     io.emit("message", message);
   });
 
-  // Handle disconnections
   socket.on("disconnect", () => {
     console.log(socket.id, " disconnected");
   });
 });
 
-server.listen(5000, () => {
-  console.log("Server is running on port 5000");
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
